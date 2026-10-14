@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jonathan Magoma — IT Graduate Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#05070a; --panel:#0b1117; --panel2:#101923; --text:#d7e4ee; --muted:#7f95a6;
+  --accent:#00ff9c; --accent2:#00d4ff; --hot:#ff2e93; --line:#1b2a38;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --head:'Space Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f2f6f9; --panel:#ffffff; --panel2:#e8eff4; --text:#0f1b26; --muted:#4d6173;
+    --accent:#008f58; --accent2:#0077a8; --hot:#c4146b; --line:#c9d6df;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#f2f6f9; --panel:#ffffff; --panel2:#e8eff4; --text:#0f1b26; --muted:#4d6173;
+  --accent:#008f58; --accent2:#0077a8; --hot:#c4146b; --line:#c9d6df;
+}
+:root[data-theme="dark"]{
+  --bg:#05070a; --panel:#0b1117; --panel2:#101923; --text:#d7e4ee; --muted:#7f95a6;
+  --accent:#00ff9c; --accent2:#00d4ff; --hot:#ff2e93; --line:#1b2a38;
+}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--mono);font-size:15px;line-height:1.65;overflow-x:hidden}
+#rain{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.22;pointer-events:none}
+.scan{position:fixed;inset:0;z-index:50;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 1px,transparent 1px 3px);mix-blend-mode:multiply;opacity:.5}
+main,nav,footer{position:relative;z-index:2}
+a{color:var(--accent2);text-decoration:none}
+a:hover{color:var(--accent)}
+
+/* BOOT */
+#boot{position:fixed;inset:0;z-index:100;background:#020304;color:#00ff9c;padding:24px;padding-top:calc(24px + env(safe-area-inset-top,0px));font-size:14px;overflow:hidden;cursor:pointer}
+#boot pre{margin:0;white-space:pre-wrap;font-family:var(--mono)}
+#boot .skip{position:absolute;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));color:#6f8;opacity:.6;font-size:12px}
+#boot.done{opacity:0;visibility:hidden;transition:opacity .7s,visibility .7s}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:40;display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:10px 18px;padding-top:calc(10px + env(safe-area-inset-top,0px));background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .logo{font-weight:700;color:var(--accent);margin-right:auto;font-family:var(--head);letter-spacing:.5px}
+nav a{color:var(--muted);padding:4px 10px;border-radius:6px;font-size:13px}
+nav a:hover{background:var(--panel2);color:var(--accent)}
+nav button{background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:4px 10px;font:inherit;font-size:13px;cursor:pointer}
+nav button:hover{color:var(--accent);border-color:var(--accent)}
+
+section{max-width:1060px;margin:0 auto;padding:84px 22px 20px}
+h2{font-family:var(--head);font-size:clamp(26px,5vw,38px);margin:0 0 6px;letter-spacing:-.5px}
+h2::before{content:'// ';color:var(--accent)}
+.sub{color:var(--muted);margin:0 0 30px}
+
+/* HERO */
+#hero{min-height:calc(100vh - 60px);display:flex;flex-direction:column;justify-content:center;padding-top:40px}
+.tag{color:var(--accent);font-size:13px;margin-bottom:10px}
+.glitch{position:relative;font-family:var(--head);font-weight:700;font-size:clamp(44px,11vw,108px);line-height:1;margin:0;letter-spacing:-2px;color:var(--text)}
+.glitch::before,.glitch::after{content:attr(data-t);position:absolute;inset:0;overflow:hidden}
+.glitch::before{color:var(--hot);transform:translate(3px,0);clip-path:inset(0 0 62% 0);animation:g1 3s infinite steps(1)}
+.glitch::after{color:var(--accent2);transform:translate(-3px,0);clip-path:inset(60% 0 0 0);animation:g2 2.6s infinite steps(1)}
+@keyframes g1{0%,88%,100%{transform:translate(0)}90%{transform:translate(6px,-2px)}94%{transform:translate(-5px,2px)}}
+@keyframes g2{0%,82%,100%{transform:translate(0)}85%{transform:translate(-7px,1px)}92%{transform:translate(4px,-2px)}}
+.role{font-size:clamp(16px,3vw,24px);margin:18px 0 8px;min-height:1.6em}
+.role .typed{color:var(--accent2)}
+.caret{display:inline-block;width:10px;height:1.1em;background:var(--accent);vertical-align:text-bottom;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.lede{max-width:640px;color:var(--muted)}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;padding:11px 20px;border-radius:8px;border:1px solid var(--accent);color:var(--accent);font-weight:700;cursor:pointer;background:transparent;font-family:var(--mono);font-size:14px;transition:.2s}
+.btn:hover{background:var(--accent);color:var(--bg);box-shadow:0 0 24px color-mix(in srgb,var(--accent) 55%,transparent)}
+.btn.alt{border-color:var(--hot);color:var(--hot)}
+.btn.alt:hover{background:var(--hot);color:#fff;box-shadow:0 0 24px color-mix(in srgb,var(--hot) 55%,transparent)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:44px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.stat b{display:block;font-family:var(--head);font-size:30px;color:var(--accent)}
+.stat span{color:var(--muted);font-size:12px}
+
+/* TERMINAL */
+.term{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.term .bar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:var(--panel2);border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
+.dot{width:11px;height:11px;border-radius:50%}
+.term .out{height:340px;overflow-y:auto;padding:14px 16px;font-size:13.5px;white-space:pre-wrap;word-break:break-word}
+.term .out .c{color:var(--accent)} .term .out .m{color:var(--muted)} .term .out .e{color:var(--hot)} .term .out .b{color:var(--accent2)}
+.term form{display:flex;gap:8px;padding:10px 16px;border-top:1px solid var(--line);align-items:center}
+.term form span{color:var(--accent)}
+.term input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--text);font:inherit;font-size:16px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:99px;padding:4px 12px;font:inherit;font-size:12px;cursor:pointer}
+.chip:hover{color:var(--accent);border-color:var(--accent)}
+
+/* PROJECTS */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+.card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;transition:transform .15s,border-color .2s,box-shadow .2s;transform-style:preserve-3d;overflow:hidden}
+.card::before{content:'';position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%),color-mix(in srgb,var(--accent) 16%,transparent),transparent 45%);opacity:0;transition:opacity .25s}
+.card:hover{border-color:var(--accent);box-shadow:0 10px 40px color-mix(in srgb,var(--accent) 16%,transparent)}
+.card:hover::before{opacity:1}
+.card.big{grid-column:1/-1}
+.card h3{font-family:var(--head);font-size:21px;margin:0 0 4px;position:relative}
+.card .kind{color:var(--hot);font-size:12px;position:relative}
+.card p{color:var(--muted);position:relative;margin:10px 0}
+.pills{display:flex;gap:6px;flex-wrap:wrap;position:relative}
+.pill{font-size:11.5px;padding:2px 10px;border-radius:99px;background:var(--panel2);border:1px solid var(--line);color:var(--accent2)}
+.card ul{margin:10px 0 0;padding-left:18px;color:var(--muted);position:relative}
+.card li{margin:3px 0}
+.play{margin-top:14px;position:relative}
+#game{display:none;margin-top:16px;border:1px solid var(--accent);border-radius:10px;background:#02050a;width:100%;max-width:480px;touch-action:none}
+.gh{font-size:12px;color:var(--muted);margin-top:6px;position:relative}
+
+/* SKILLS */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.sk{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+.sk h4{margin:0 0 14px;font-family:var(--head);color:var(--accent2);font-size:17px}
+.row{margin:11px 0}
+.row .l{display:flex;justify-content:space-between;font-size:13px}
+.track{height:7px;background:var(--panel2);border-radius:9px;overflow:hidden;margin-top:5px}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:9px;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+
+/* TIMELINE */
+.tl{border-left:2px solid var(--line);margin-left:8px;padding-left:24px}
+.ev{position:relative;margin-bottom:26px}
+.ev::before{content:'';position:absolute;left:-32px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 12px var(--accent)}
+.ev b{font-family:var(--head);font-size:18px}
+.ev small{display:block;color:var(--hot)}
+.ev p{margin:4px 0 0;color:var(--muted)}
+
+/* CONTACT */
+.contact{background:var(--panel);border:1px dashed var(--accent);border-radius:16px;padding:34px;text-align:center}
+.contact h3{font-family:var(--head);font-size:clamp(24px,5vw,40px);margin:0 0 8px}
+.links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:44px 20px calc(44px + env(safe-area-inset-bottom,0px))}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s}
+.rv.in{opacity:1;transform:none}
+body.god .glitch,body.god h2{animation:rainbow 2s linear infinite}
+@keyframes rainbow{to{filter:hue-rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){
+  .glitch::before,.glitch::after,.caret{animation:none}
+  .rv{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<canvas id="rain"></canvas>
+<div class="scan"></div>
+
+<div id="boot"><pre id="bootText"></pre><div class="skip">[ tap to skip ]</div></div>
+
+<nav>
+  <span class="logo">&lt;JM/&gt;</span>
+  <a href="#about">about</a><a href="#terminal">terminal</a><a href="#projects">projects</a><a href="#skills">skills</a><a href="#journey">journey</a><a href="#contact">contact</a>
+  <button id="themeBtn" aria-label="Toggle light or dark theme">◐</button>
+</nav>
+
+<main>
+<section id="hero">
+  <div class="tag">&gt; whoami</div>
+  <h1 class="glitch" data-t="JONATHAN MAGOMA">JONATHAN MAGOMA</h1>
+  <div class="role">I build <span class="typed" id="typed"></span><span class="caret"></span></div>
+  <p class="lede">Diploma in Information Technology graduate from Gretsa University, Kenya. I turn messy real-world problems — paper notebooks, missing records, zero internet — into working software. I also build games for fun, and I'm learning to break things ethically.</p>
+  <div class="cta">
+    <a class="btn" href="#projects">View my work</a>
+    <button class="btn alt" id="heroTerm">Hack my portfolio ▸</button>
+  </div>
+  <div class="stats">
+    <div class="stat"><b data-count="1">0</b><span>full-stack system shipped</span></div>
+    <div class="stat"><b data-count="3">0</b><span>browser games built</span></div>
+    <div class="stat"><b data-count="6">0</b><span>modules in my flagship app</span></div>
+    <div class="stat"><b data-count="2026">0</b><span>graduating class</span></div>
+  </div>
+</section>
+
+<section id="about" class="rv">
+  <h2>about.exe</h2>
+  <p class="sub">The short version of me.</p>
+  <div class="grid">
+    <div class="card"><h3>The builder</h3><p>I learn by shipping. VS Code open, XAMPP running, Git ready for when I break something — that's my natural habitat. I like projects people can actually use, not just demos.</p></div>
+    <div class="card"><h3>The problem-solver</h3><p>My final-year project started with a real farm that tracked everything in notebooks and paper receipts. I interviewed the problem first, then wrote the code.</p></div>
+    <div class="card"><h3>The curious one</h3><p>Cybersecurity, networking, firewalls, game dev, web design. If it has a system inside it, I want to know how it works — and how it fails.</p></div>
+  </div>
+</section>
+
+<section id="terminal" class="rv">
+  <h2>terminal</h2>
+  <p class="sub">Yes, it works. Type <b>help</b> to start — or tap a chip.</p>
+  <div class="term">
+    <div class="bar"><span class="dot" style="background:#ff5f56"></span><span class="dot" style="background:#ffbd2e"></span><span class="dot" style="background:#27c93f"></span>&nbsp; jonathan@portfolio: ~</div>
+    <div class="out" id="out" aria-live="polite"></div>
+    <form id="tf" autocomplete="off"><span>$</span><input id="ti" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Terminal input"></form>
+  </div>
+  <div class="chips" id="chips"></div>
+</section>
+
+<section id="projects">
+  <h2>projects</h2>
+  <p class="sub">Things I've actually built.</p>
+  <div class="grid">
+    <div class="card big rv">
+      <div class="kind">FINAL-YEAR PROJECT · FLAGSHIP</div>
+      <h3>Jonathan's Farm Management System</h3>
+      <p>A role-based web application that replaces a farm's paper notebooks with one centralized system running on the local network — built for a site with limited internet. One dashboard shows revenue, orders, customers and product counts, with live charts for the sales trend and payment methods.</p>
+      <ul>
+        <li>Role-based access for administrator, farm manager and farm workers</li>
+        <li>Six modules: users, dashboard, crop &amp; livestock, inventory, orders &amp; sales, customers</li>
+        <li>Chart.js dashboard: weekly sales overview + payment-method donut</li>
+        <li>M-Pesa Daraja STK Push payment integration</li>
+        <li>Fully documented: context diagram, DFDs, ERD, use cases, testing, defence presentation</li>
+      </ul>
+      <div class="pills" style="margin-top:14px"><span class="pill">PHP</span><span class="pill">MySQL</span><span class="pill">JavaScript</span><span class="pill">Chart.js</span><span class="pill">XAMPP</span><span class="pill">phpMyAdmin</span><span class="pill">Git</span></div>
+    </div>
+
+    <div class="card rv">
+      <div class="kind">GAME · HTML5 CANVAS</div>
+      <h3>Killer Red</h3>
+      <p>A space shooter with levels, power-ups and real sound effects — lasers, explosions, hits and a game-over sting. Built under the "Joetech studios" banner.</p>
+      <div class="pills"><span class="pill">JavaScript</span><span class="pill">Canvas</span><span class="pill">Web Audio</span></div>
+      <button class="btn play" id="playBtn">▶ Play a mini demo</button>
+      <canvas id="game" width="480" height="320"></canvas>
+      <div class="gh" id="gh" style="display:none">Drag / move mouse to steer · it auto-fires · survive the rocks</div>
+    </div>
+
+    <div class="card rv">
+      <div class="kind">GAME · HTML5 CANVAS</div>
+      <h3>Star Siege</h3>
+      <p>Another canvas space shooter, where I experimented with game loops, collision detection and enemy waves.</p>
+      <div class="pills"><span class="pill">JavaScript</span><span class="pill">Canvas</span></div>
+    </div>
+
+    <div class="card rv">
+      <div class="kind">GAME · CONCEPT</div>
+      <h3>Mystery Blend</h3>
+      <p>A flavor-mixing game inspired by Dr Pepper's famous 23 flavors. Mix, taste, guess.</p>
+      <div class="pills"><span class="pill">HTML</span><span class="pill">CSS</span><span class="pill">JavaScript</span></div>
+    </div>
+
+    <div class="card rv">
+      <div class="kind">DEBUGGING · PYTHON</div>
+      <h3>FlapPyBird fix</h3>
+      <p>Took a Flappy Bird clone that wouldn't run and fixed its entry point and compatibility problems — reading someone else's code is a skill too.</p>
+      <div class="pills"><span class="pill">Python</span><span class="pill">Pygame</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="rv">
+  <h2>skills</h2>
+  <p class="sub">Honest levels, no fake 100%s.</p>
+  <div class="skills">
+    <div class="sk"><h4>Web development</h4>
+      <div class="row"><div class="l"><span>HTML &amp; CSS</span><span>85%</span></div><div class="track"><div class="fill" data-w="85"></div></div></div>
+      <div class="row"><div class="l"><span>JavaScript</span><span>75%</span></div><div class="track"><div class="fill" data-w="75"></div></div></div>
+      <div class="row"><div class="l"><span>PHP</span><span>75%</span></div><div class="track"><div class="fill" data-w="75"></div></div></div>
+    </div>
+    <div class="sk"><h4>Data &amp; tools</h4>
+      <div class="row"><div class="l"><span>MySQL / database design</span><span>78%</span></div><div class="track"><div class="fill" data-w="78"></div></div></div>
+      <div class="row"><div class="l"><span>Git &amp; VS Code</span><span>70%</span></div><div class="track"><div class="fill" data-w="70"></div></div></div>
+      <div class="row"><div class="l"><span>Systems analysis (DFD, ERD, UML)</span><span>80%</span></div><div class="track"><div class="fill" data-w="80"></div></div></div>
+    </div>
+    <div class="sk"><h4>Growing fast</h4>
+      <div class="row"><div class="l"><span>Cybersecurity fundamentals</span><span>45%</span></div><div class="track"><div class="fill" data-w="45"></div></div></div>
+      <div class="row"><div class="l"><span>Networking &amp; firewalls</span><span>50%</span></div><div class="track"><div class="fill" data-w="50"></div></div></div>
+      <div class="row"><div class="l"><span>Game development</span><span>60%</span></div><div class="track"><div class="fill" data-w="60"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="journey" class="rv">
+  <h2>journey</h2>
+  <p class="sub">From first line of code to graduation.</p>
+  <div class="tl">
+    <div class="ev"><small>2025</small><b>Joined Gretsa University</b><p>Started the Diploma in Information Technology, School of Computing &amp; Informatics.</p></div>
+    <div class="ev"><small>2025 – 2026</small><b>Built things on the side</b><p>Browser games, web experiments, bug-fixing other people's code, and early cybersecurity self-study.</p></div>
+    <div class="ev"><small>2026</small><b>Farm Management System</b><p>Analysed a real farm's workflow, designed the database, and built a role-based PHP/MySQL web app with a live dashboard.</p></div>
+    <div class="ev"><small>July 2026</small><b>Project submitted</b><p>Report, system and defence presentation delivered for the Diploma award.</p></div>
+    <div class="ev"><small>Next</small><b>Open to work &amp; to learning</b><p>Looking for an internship or junior role in web development, software or security.</p></div>
+  </div>
+</section>
+
+<section id="contact" class="rv">
+  <div class="contact">
+    <h3>Let's build something. 🚀</h3>
+    <p class="sub" style="margin:0">Open to junior developer roles, internships and freelance projects.</p>
+    <div class="links">
+      <a class="btn" href="mailto:your.email@example.com">✉ Email me</a>
+      <a class="btn" href="https://github.com/your-username" rel="noopener">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/your-profile" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>© 2026 Jonathan Magoma · Built by hand · psst… try the Konami code ↑↑↓↓←→←→BA</footer>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- BOOT ---------- */
+const boot=$('#boot'), bt=$('#bootText');
+const lines=[
+ '[ OK ] Initialising JM-OS v2026.07',
+ '[ OK ] Mounting /dev/diploma ........ Gretsa University',
+ '[ OK ] Loading modules: php mysql js canvas git',
+ '[ OK ] Compiling coffee.exe',
+ '[WARN] Bugs detected: 0 (suspicious)',
+ '[ OK ] Starting portfolio daemon',
+ '',
+ 'ACCESS GRANTED. Welcome.'
+];
+let bi=0,closed=false;
+function closeBoot(){ if(closed) return; closed=true; boot.classList.add('done'); }
+function nextLine(){
+  if(closed) return;
+  if(bi<lines.length){ bt.textContent+=lines[bi++]+'\n'; setTimeout(nextLine,reduce?0:300); }
+  else setTimeout(closeBoot,600);
+}
+boot.addEventListener('click',closeBoot);
+nextLine();
+
+/* ---------- MATRIX RAIN ---------- */
+const cv=$('#rain'),cx=cv.getContext('2d');
+let cols,drops,fs=16;
+function sizeRain(){cv.width=innerWidth;cv.height=innerHeight;cols=Math.floor(cv.width/fs);drops=Array(cols).fill(0).map(()=>Math.random()*-50);}
+sizeRain(); addEventListener('resize',sizeRain);
+const chars='01{}<>/;$#PHPSQLJSGITアイウエオカキクケコ';
+function rain(){
+  cx.fillStyle='rgba(0,0,0,.08)'; cx.fillRect(0,0,cv.width,cv.height);
+  cx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#0f9';
+  cx.font=fs+'px monospace';
+  for(let i=0;i<cols;i++){
+    cx.fillText(chars[Math.floor(Math.random()*chars.length)],i*fs,drops[i]*fs);
+    if(drops[i]*fs>cv.height&&Math.random()>.975) drops[i]=0;
+    drops[i]++;
+  }
+}
+let rainOn=!reduce;
+if(rainOn) setInterval(rain,55);
+
+/* ---------- TYPED ROLES ---------- */
+const roles=['web apps that solve real problems.','role-based systems with PHP & MySQL.','browser games with HTML5 Canvas.','dashboards people actually read.','secure things (I\'m learning to break them first).'];
+let ri=0,ci=0,del=false; const typed=$('#typed');
+function tick(){
+  const w=roles[ri];
+  typed.textContent=w.slice(0,ci);
+  if(!del&&ci<w.length){ci++;setTimeout(tick,55);}
+  else if(!del){del=true;setTimeout(tick,1400);}
+  else if(ci>0){ci--;setTimeout(tick,25);}
+  else{del=false;ri=(ri+1)%roles.length;setTimeout(tick,300);}
+}
+if(reduce) typed.textContent=roles[0]; else tick();
+
+/* ---------- REVEAL + COUNTERS + BARS ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){
+    e.target.classList.add('in');
+    e.target.querySelectorAll('.fill').forEach(f=>f.style.width=f.dataset.w+'%');
+    io.unobserve(e.target);
+  }
+}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+// safety net in case observer never fires
+setTimeout(()=>document.querySelectorAll('.rv').forEach(el=>{ if(el.getBoundingClientRect().top<innerHeight){el.classList.add('in');el.querySelectorAll('.fill').forEach(f=>f.style.width=f.dataset.w+'%');}}),1200);
+
+document.querySelectorAll('[data-count]').forEach(el=>{
+  const t=+el.dataset.count; let n=0; const step=Math.max(1,Math.ceil(t/60));
+  const iv=setInterval(()=>{n=Math.min(t,n+step);el.textContent=n;if(n>=t)clearInterval(iv);},reduce?1:30);
+});
+
+/* ---------- CARD SPOTLIGHT ---------- */
+document.querySelectorAll('.card').forEach(c=>c.addEventListener('pointermove',e=>{
+  const r=c.getBoundingClientRect();
+  c.style.setProperty('--mx',(e.clientX-r.left)+'px');
+  c.style.setProperty('--my',(e.clientY-r.top)+'px');
+}));
+
+/* ---------- THEME ---------- */
+$('#themeBtn').onclick=()=>{
+  const r=document.documentElement;
+  const dark=getComputedStyle(r).getPropertyValue('--bg').trim()==='#05070a';
+  r.setAttribute('data-theme',dark?'light':'dark');
+};
+$('#heroTerm').onclick=()=>{ $('#terminal').scrollIntoView({behavior:reduce?'auto':'smooth'}); setTimeout(()=>$('#ti').focus({preventScroll:true}),600); };
+
+/* ---------- TERMINAL ---------- */
+const out=$('#out'), ti=$('#ti');
+function print(t,cls){const s=document.createElement('span');if(cls)s.className=cls;s.textContent=t+'\n';out.appendChild(s);out.scrollTop=out.scrollHeight;}
+const cmds={
+ help:()=>['Available commands:','  about      who am I','  skills     what I can do','  projects   what I built','  education  where I studied','  contact    reach me','  fun        something silly','  theme <green|cyan|pink|gold>','  matrix     toggle the rain','  sudo hire-me','  clear','' ].join('\n'),
+ about:()=>'Jonathan Magoma — IT diploma graduate (Gretsa University).\nI build practical software: web apps, games, and systems that replace paper with something better.',
+ skills:()=>'PHP · MySQL · JavaScript · HTML/CSS · Chart.js · Git · XAMPP · VS Code\nSystems analysis (DFD, ERD, use cases) · Canvas game dev\nLearning: cybersecurity, networking, ethical hacking (TryHackMe / HTB roadmap)',
+ projects:()=>'1. Farm Management System  (PHP/MySQL, flagship)\n2. Killer Red                (HTML5 Canvas shooter)\n3. Star Siege                (Canvas shooter)\n4. Mystery Blend             (flavor-mixing game)\n5. FlapPyBird fix            (Python debugging)',
+ education:()=>'Diploma in Information Technology\nSchool of Computing & Informatics, Gretsa University — 2026',
+ contact:()=>'Scroll to the bottom or click the buttons — I reply to good ideas fast.',
+ fun:()=>['Why do programmers prefer dark mode?\nBecause light attracts bugs. 🐛','There are 10 kinds of people: those who understand binary and those who don\'t.','It works on my machine. ¯\\_(ツ)_/¯'][Math.floor(Math.random()*3)],
+ 'sudo hire-me':()=>'[sudo] password for recruiter: ********\nAccess granted.\nOffer letter generating... 100%\nJonathan has joined your team. Welcome aboard! 🎉',
+ whoami:()=>'recruiter (soon-to-be teammate)',
+ ls:()=>'about.exe  projects/  skills.json  journey.log  secrets.txt',
+ 'cat secrets.txt':()=>'Nice try. 😏 But I do keep my passwords hashed.',
+ pwd:()=>'/home/jonathan/portfolio',
+ date:()=>new Date().toString(),
+ 'rm -rf /':()=>'Permission denied. Also, why would you do that to me?',
+};
+function run(raw){
+  const c=raw.trim(); if(!c) return;
+  print('$ '+c,'c');
+  const low=c.toLowerCase();
+  if(low==='clear'){out.textContent='';return;}
+  if(low==='matrix'){rainOn=!rainOn; if(rainOn&&!window._ri){window._ri=setInterval(rain,55);} cv.style.display=rainOn?'block':'none'; print(rainOn?'Rain enabled.':'Rain disabled.','m');return;}
+  if(low.startsWith('theme')){
+    const t=low.split(/\s+/)[1];
+    const map={green:['#00ff9c','#00d4ff'],cyan:['#00d4ff','#7c5cff'],pink:['#ff2e93','#ffb300'],gold:['#ffb300','#ff2e93']};
+    if(map[t]){document.documentElement.style.setProperty('--accent',map[t][0]);document.documentElement.style.setProperty('--accent2',map[t][1]);print('Theme set to '+t+'.','b');}
+    else print('Usage: theme green|cyan|pink|gold','e');
+    return;
+  }
+  if(cmds[low]) print(cmds[low](),'');
+  else print("command not found: "+c+" — type 'help'",'e');
+}
+$('#tf').addEventListener('submit',e=>{e.preventDefault();run(ti.value);ti.value='';});
+['help','about','skills','projects','fun','sudo hire-me','theme pink'].forEach(c=>{
+  const b=document.createElement('button');b.className='chip';b.type='button';b.textContent=c;
+  b.onclick=()=>run(c);$('#chips').appendChild(b);
+});
+print("JM-OS terminal ready. Type 'help'.",'m');
+
+/* ---------- KONAMI ---------- */
+const kk=[38,38,40,40,37,39,37,39,66,65];let kp=0;
+addEventListener('keydown',e=>{
+  if(document.activeElement===ti) return;
+  kp=(e.keyCode===kk[kp])?kp+1:0;
+  if(kp===kk.length){kp=0;document.body.classList.toggle('god');print('GOD MODE toggled. 🌈','b');}
+});
+
+/* ---------- MINI GAME ---------- */
+const gc=$('#game'),g=gc.getContext('2d');
+let gOn=false,raf,ship,rocks,bullets,score,t,gameOver;
+function reset(){ship={x:240,y:285};rocks=[];bullets=[];score=0;t=0;gameOver=false;}
+function loop(){
+  if(!gOn) return;
+  g.fillStyle='#02050a';g.fillRect(0,0,480,320);
+  for(let i=0;i<30;i++){g.fillStyle='rgba(255,255,255,.5)';g.fillRect((i*97+t*(1+i%3))%480,(i*53+t*(1+i%3)*2)%320,1.5,1.5);}
+  if(!gameOver){
+    t++;
+    if(t%8===0) bullets.push({x:ship.x,y:ship.y-12});
+    if(t%Math.max(14,40-Math.floor(score/5))===0) rocks.push({x:20+Math.random()*440,y:-20,r:10+Math.random()*14,v:1.4+Math.random()*1.6+score/60});
+    bullets.forEach(b=>b.y-=7); bullets=bullets.filter(b=>b.y>-10);
+    rocks.forEach(r=>r.y+=r.v);
+    rocks.forEach(r=>bullets.forEach(b=>{if(!r.dead&&!b.dead&&Math.hypot(r.x-b.x,r.y-b.y)<r.r){r.dead=b.dead=true;score++;}}));
+    rocks=rocks.filter(r=>!r.dead&&r.y<340); bullets=bullets.filter(b=>!b.dead);
+    if(rocks.some(r=>Math.hypot(r.x-ship.x,r.y-ship.y)<r.r+9)) gameOver=true;
+  }
+  g.fillStyle='#ff2e93';bullets.forEach(b=>g.fillRect(b.x-1.5,b.y,3,10));
+  g.fillStyle='#7f95a6';rocks.forEach(r=>{g.beginPath();g.arc(r.x,r.y,r.r,0,7);g.fill();});
+  g.fillStyle='#00ff9c';g.beginPath();g.moveTo(ship.x,ship.y-14);g.lineTo(ship.x-11,ship.y+10);g.lineTo(ship.x+11,ship.y+10);g.closePath();g.fill();
+  g.fillStyle='#fff';g.font='14px monospace';g.fillText('SCORE '+score,10,20);
+  if(gameOver){g.fillStyle='rgba(0,0,0,.6)';g.fillRect(0,0,480,320);g.fillStyle='#ff2e93';g.font='bold 28px monospace';g.fillText('GAME OVER',160,150);g.fillStyle='#fff';g.font='14px monospace';g.fillText('tap / click to restart',160,180);}
+  raf=requestAnimationFrame(loop);
+}
+function steer(e){const r=gc.getBoundingClientRect();ship.x=Math.max(12,Math.min(468,(e.clientX-r.left)*480/r.width));}
+gc.addEventListener('pointermove',steer);
+gc.addEventListener('pointerdown',e=>{steer(e);if(gameOver)reset();});
+$('#playBtn').onclick=()=>{
+  gOn=!gOn;
+  gc.style.display=gOn?'block':'none';$('#gh').style.display=gOn?'block':'none';
+  $('#playBtn').textContent=gOn?'■ Stop demo':'▶ Play a mini demo';
+  if(gOn){reset();loop();}else cancelAnimationFrame(raf);
+};
+})();
+</script>
+</body>
+</html>
